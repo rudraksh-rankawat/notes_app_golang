@@ -8,9 +8,13 @@ import (
 	"example.com/note/note"
 	"example.com/note/todo"
 )
-
 type displayer interface {
 	Display()
+}
+
+type outputtable interface {
+	displayer
+	Save() error
 }
 
 func main() {
@@ -29,15 +33,20 @@ func main() {
 		return 
 	}
 
-	displayData(todo1)
-	err = todo1.Save()
+	err = outputData(todo1)
+
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	displayData(note1)
-	note1.Save()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	outputData(note1)
+
 }
 
 func getNoteData() (string, string) {
@@ -55,6 +64,9 @@ func getUserData(prompt string) string {
 	return strings.TrimSpace(value)
 }
 
-func displayData(data displayer) {
+func outputData(data outputtable) error {
 	data.Display()
+	err := data.Save()
+	return err
 }
+
