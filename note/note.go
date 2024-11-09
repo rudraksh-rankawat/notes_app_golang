@@ -3,11 +3,13 @@ package note
 import (
 	"errors"
 	"fmt"
+	"time"
 )
 
 type Note struct {
-	title   string
-	content string
+	Title   	string
+	Content 	string
+	CreatedAt   time.Time
 }
 
 func New(title, content string) (Note, error) {
@@ -20,7 +22,13 @@ func New(title, content string) (Note, error) {
 	}
 
 	return Note{
-		title: title,
-		content: content,
+		Title: title,
+		Content: content,
+		CreatedAt: time.Now(),
 	}, nil
+}
+
+func (n Note) Display() {
+	fmt.Printf("Here is your Note:\n")
+	fmt.Printf("Title: %v\nContent: %v\n", n.Title, n.Content)
 }
