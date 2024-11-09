@@ -30,7 +30,14 @@ func main() {
 	}
 
 	displayData(todo1)
+	err = todo1.Save()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	displayData(note1)
+	note1.Save()
 }
 
 func getNoteData() (string, string) {
